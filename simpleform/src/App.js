@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import "./App.css"
 
 const App = () => {
     const [firstname, setFirstname] = useState("");
@@ -11,7 +12,21 @@ const App = () => {
           maths: false,
           physics: false,
     });
+    const [resume, setResume] = useState("");
+    const [url, setUrl] = useState();
 
+    const handleSubmit = (e) => {
+        e.prventDefault();
+        console.log(
+            firstname,
+            lastname,
+            email,
+            contact,
+            subjects,
+            resume,
+            url,
+        )
+    }
 
     const handleSubjectChange = (sub) => {
       setSubjects((prev) => ({
@@ -19,6 +34,21 @@ const App = () => {
         [sub]: !prev[sub],
       }));
     }
+
+    const handleReset = () => {
+      // Reset all state variables here
+      setFirstname("");
+      setLastName("");
+      setEmail("");
+      setContact("");
+      setSubjects({
+          english: true,
+          maths: false,
+          physics: false,
+      });
+      setResume("");
+      setUrl("");
+  };
 
 
   return (
@@ -103,6 +133,52 @@ const App = () => {
               }
           />
           Physics
+          <input
+              type='checkbox'
+              name='lang'
+              id='maths'
+              checked={subjects.maths === true} 
+              onChange={(e) => 
+                handleSubjectChange("maths")
+              }
+          />
+          Maths
+          <label for="file">Upload Resume</label>
+          <input 
+              type='file'
+              name='file'
+              id='file'
+              onChange={(e) => 
+                  setResume(e.target.files[0])
+              }
+              placeholder='Upload File'
+              required
+          />
+           <label for="url">Enter URL*</label>
+                    <input
+                        type="url"
+                        name="url"
+                        id="url"
+                        onChange={(e) =>
+                            setUrl(e.target.value)
+                        }
+                        placeholder="Enter url"
+                        required
+                    />
+                     <button
+                        type="reset"
+                        value="reset"
+                        onClick={() => handleReset()}
+                    >
+                        Reset
+                    </button>
+                    <button
+                        type="submit"
+                        value="Submit"
+                        onClick={(e) => handleSubmit(e)}
+                    >
+                        Submit
+                    </button>
         </form>
       </fieldset>
     </div>
